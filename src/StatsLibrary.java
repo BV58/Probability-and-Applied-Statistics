@@ -54,5 +54,31 @@ public class StatsLibrary {
 
         return (Double) null;
     }
+
+    public double combination(double n, double r){
+        double nMinusR = 1;
+        for (int i = 1; i <= n-r; i++){
+            nMinusR *= i;
+        }
+        return factorial(n)/(factorial(r) * nMinusR);
+    }
+
+    public double permutation(double n, double r){
+        double nMinusR = 1;
+        for (int i = 1; i <= n-r; i++){
+            nMinusR *= i;
+        }
+
+        return factorial(n)/nMinusR;
+    }
+
+    public double factorial(double n){
+        double nFactorial = 1;
+        for (double i = 1; i <= n; i++){
+            nFactorial *= i;
+        }
+        return nFactorial;
+    }
+
 }
 
