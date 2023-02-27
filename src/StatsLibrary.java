@@ -11,7 +11,9 @@ public class StatsLibrary {
      */
     public double mean(ArrayList<Double> input) {
         double total = 0;
-        for( double num : input) total += num;
+        for(double number : input){
+            total = total + number;
+        }
         return total/input.size();
     }
 
@@ -49,10 +51,15 @@ public class StatsLibrary {
 
     }
 
-    //method for standardDeviation(arraylist)
-    public double StandardDeviation(ArrayList<Double> input) {
 
-        return (Double) null;
+    public double standardDeviation(ArrayList<Double> input) {
+        double sum = 0;
+        double m = mean(input);
+        for(double d : input){
+            sum += Math.pow((d - m),2);
+        }
+
+        return Math.sqrt(sum/input.size());
     }
 
     public double combination(double n, double r){
@@ -78,6 +85,10 @@ public class StatsLibrary {
             nFactorial *= i;
         }
         return nFactorial;
+    }
+
+    public double binomialDistribution(double p, double n, double y){
+        return combination(n,y)*Math.pow(p,y)*Math.pow(1-p, n-y);
     }
 
 }
