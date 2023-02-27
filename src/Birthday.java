@@ -23,7 +23,7 @@ public class Birthday {
    private static void birthdayChecker(int people, int runs){
        ArrayList<Person> personArray = new ArrayList<>();
        for(int i = 0; i < people; i++){
-          personArray.add(new Person(null)); //need to put a random generator of a mm/dd
+          //personArray.add(new Person(null)); //need to put a random generator of a mm/dd
        }
 
        for(int i = 0; i < runs; i++){

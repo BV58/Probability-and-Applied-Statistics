@@ -9,8 +9,10 @@ public class Main {
 //        System.out.println((statsLib.combination(4, 3)*(statsLib.combination(4,2))/statsLib.combination(52, 5)));
        // System.out.println(statsLib.combination(50, 3)/statsLib.permutation(4, 3));
 
-        Birthday birth = new Birthday();
-        birth.userInput();
+//        Birthday birth = new Birthday();
+//        birth.userInput();
+        MontyHall mh = new MontyHall();
+        mh.input();
 
 
     }
