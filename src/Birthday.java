@@ -1,13 +1,10 @@
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
+import java.util.Random;
 
 public class Birthday {
-    //Goal: Determine the probability of any 2 people sharing a birthday in the class ofx people.
-    //Have user input for number of random people to create.
-    //Make Person class, with int birthday. can use MM/DD, dont have to consider leap years
-    //Make sure you can configure the number of runs without touching your loop
-        //Your main method should be able to control the run, determine class size (# of people), and number of runs
-    //Main method in another class
 
    public void userInput(){
        Scanner scan = new Scanner(System.in);
@@ -17,23 +14,39 @@ public class Birthday {
        System.out.println("How many runs?");
        int numberOfRuns = scan.nextInt();
 
-       birthdayChecker(numberOfPeople, numberOfRuns);
+       output(numberOfPeople, numberOfRuns);
    }
 
-   private static void birthdayChecker(int people, int runs){
-       ArrayList<Person> personArray = new ArrayList<>();
-       for(int i = 0; i < people; i++){
-          //personArray.add(new Person(null)); //need to put a random generator of a mm/dd
-       }
-
+   private static void output(int people, double runs){
+       double success = 0;
        for(int i = 0; i < runs; i++){
-
+           success += birthdayCheck(people);
        }
 
+       DecimalFormat decFormat = new DecimalFormat("#%");
+       double ratio = success/runs;
+       System.out.println("Percentage of times two people in the class had the same birthday: " +decFormat.format(ratio));
+   }
 
+   private static double birthdayCheck(int people){
 
+       Random ran = new Random();
+       ArrayList<Person> classroom = new ArrayList<>();
+       for(int i = 0; i < people; i++){
+           classroom.add(new Person(ran.nextInt(365)+1));
+       }
+       ArrayList<Integer> birthdays = new ArrayList<>();
+       for(Person person : classroom){
+           birthdays.add(person.getBirthday());
+       }
 
+       for(Person person : classroom){
+           if(Collections.frequency(birthdays, person.getBirthday()) > 1){
+               return 1;
+           }
+       }
 
+       return 0;
    }
 
 }

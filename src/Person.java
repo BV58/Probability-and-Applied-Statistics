@@ -4,4 +4,7 @@ public class Person {
         this.birthday = birthday;
     }
 
+    public int getBirthday() {
+        return birthday;
+    }
 }
