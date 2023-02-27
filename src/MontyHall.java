@@ -1,7 +1,6 @@
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class MontyHall {
 
@@ -11,18 +10,18 @@ public class MontyHall {
     public void input(){
         Random ran = new Random();
         Scanner scan = new Scanner(System.in);
-        System.out.println("Would you like to choose your own door or let the program to? (own/program)");
-        String ownOrProgram = scan.nextLine();
-        int doorNum = 0;
-        if(ownOrProgram.equals("own")){
-            System.out.println("What door would you like to choose? (1-3)");
-            doorNum = Integer.parseInt(scan.nextLine());
-        } else if (ownOrProgram.equals("program")) {
-            doorNum = ran.nextInt(3)+1;
-        }else{
-            doorNum = ran.nextInt(3)+1;
-            System.out.println("Invalid input. Defaulting to program.");
-        }
+//        System.out.println("Would you like to choose your own door or let the program to? (own/program)");
+//        String ownOrProgram = scan.nextLine();
+//        int doorNum = 0;
+//        if(ownOrProgram.equals("own")){
+//            System.out.println("What door would you like to choose? (1-3)");
+//            doorNum = Integer.parseInt(scan.nextLine());
+//        } else if (ownOrProgram.equals("program")) {
+//            doorNum = ran.nextInt(3)+1;
+//        }else{
+//            doorNum = ran.nextInt(3)+1;
+//            System.out.println("Invalid input. Defaulting to program.");
+//        }
         System.out.println("Would you like the program to change the door number when given the option? (y/n)");
         String choice = scan.nextLine();
         if(choice.equals("y") == false && choice.equals("n") == false){
@@ -34,8 +33,8 @@ public class MontyHall {
         double runs = Double.parseDouble(scan.nextLine());
 
         double count = 0;
-        for(int i = 0; i <=runs; i++) {
-            count += montyHall(choice, doorNum);
+        for(int i = 0; i < runs; i++) {
+            count += montyHall(choice, ran.nextInt(3)+1);
         }
         double ratio = (count/runs);
         DecimalFormat decFormat = new DecimalFormat("#%");
@@ -49,32 +48,46 @@ public class MontyHall {
 
     public int montyHall(String input, int doorNumber){
         Random random = new Random();
-        ArrayList<String> doors = new ArrayList<>();
+        HashMap<Integer, String> doors = new HashMap<>();
+
         ArrayList<String> options = new ArrayList<>();
         options.add("goat");
         options.add("goat");
         options.add("car");
 
+        int count = 1;
         while(options.size() != 0){
             int ranInt = random.nextInt(options.size());
             String temp = options.get(ranInt);
-            doors.add(temp);
+            doors.put(count,temp);
             options.remove(options.indexOf(temp));
+            count++;
         }
-        ArrayList<Integer> numbers = new ArrayList<>();
-        numbers.add(1);
-        numbers.add(2);
-        numbers.add(3);
-        numbers.remove(numbers.indexOf(doorNumber));
 
-
-        int finalChoice = doorNumber;
+        String finalChoice = doors.get(doorNumber);
         if(input.equals("y")){
-            int ranInt = random.nextInt(numbers.size());
-            finalChoice = numbers.get(ranInt);
+            doors.remove(doorNumber);
+            AtomicInteger goat = new AtomicInteger();
+            AtomicInteger car = new AtomicInteger();
+            System.out.println("Door number chosen: "+doorNumber);
+            System.out.println("Last two doors: ");
+            doors.forEach((key, value) -> {
+                System.out.print(key+", ");
+                if(value.equals("goat")){
+                    goat.getAndIncrement();
+                }else{
+                    car.getAndIncrement();
+                }
+            });
+            System.out.println("");
+            if(goat.intValue() == 2){
+                finalChoice = "goat";
+            }else{
+                finalChoice = "car";
+            }
         }
-
-        if(doors.get(finalChoice-1).equals("car")){
+        
+        if(finalChoice.equals("car")){
             return 1;
         }else{
             return 0;
