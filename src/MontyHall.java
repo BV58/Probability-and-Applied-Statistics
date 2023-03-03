@@ -4,45 +4,26 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class MontyHall {
 
-
-    //ALSO ANSWER 2.20 IN COMMENTS HERE PRETTY PLEASE BRENDY
-
     public void input(){
         Random ran = new Random();
-        Scanner scan = new Scanner(System.in);
-//        System.out.println("Would you like to choose your own door or let the program to? (own/program)");
-//        String ownOrProgram = scan.nextLine();
-//        int doorNum = 0;
-//        if(ownOrProgram.equals("own")){
-//            System.out.println("What door would you like to choose? (1-3)");
-//            doorNum = Integer.parseInt(scan.nextLine());
-//        } else if (ownOrProgram.equals("program")) {
-//            doorNum = ran.nextInt(3)+1;
-//        }else{
-//            doorNum = ran.nextInt(3)+1;
-//            System.out.println("Invalid input. Defaulting to program.");
-//        }
-        System.out.println("Would you like the program to change the door number when given the option? (y/n)");
-        String choice = scan.nextLine();
-        if(choice.equals("y") == false && choice.equals("n") == false){
-            System.out.println("Invalid input, defaulting choice to n");
-            choice = "n";
-        }
 
-        System.out.println("How many times would you like the program to run?");
-        double runs = Double.parseDouble(scan.nextLine());
 
         double count = 0;
-        for(int i = 0; i < runs; i++) {
-            count += montyHall(choice, ran.nextInt(3)+1);
+        for(int i = 0; i < 10000; i++) {
+            count += montyHall("y", ran.nextInt(3)+1);
         }
-        double ratio = (count/runs);
+        double changeRatio = (count/10000);
+         count = 0;
+        for(int i = 0; i < 10000; i++) {
+            count += montyHall("n", ran.nextInt(3)+1);
+        }
+        double stayRatio = (count/10000);
         DecimalFormat decFormat = new DecimalFormat("#%");
-        if (choice.trim().equals("y")){
-            System.out.println("The success rate of changing the door when given the option is: "+decFormat.format(ratio));
-        }else if(choice.trim().equals("n")){
-            System.out.println("The success rate of staying with your original choice is: "+decFormat.format(ratio));
-        }
+
+        System.out.println("The success rate of changing the door when given the option is: "+decFormat.format(changeRatio));
+
+        System.out.println("The success rate of staying with your original choice is: "+decFormat.format(stayRatio));
+
 
     }
 
@@ -69,17 +50,13 @@ public class MontyHall {
             doors.remove(doorNumber);
             AtomicInteger goat = new AtomicInteger();
             AtomicInteger car = new AtomicInteger();
-            System.out.println("Door number chosen: "+doorNumber);
-            System.out.println("Last two doors: ");
             doors.forEach((key, value) -> {
-                System.out.print(key+", ");
                 if(value.equals("goat")){
                     goat.getAndIncrement();
                 }else{
                     car.getAndIncrement();
                 }
             });
-            System.out.println("");
             if(goat.intValue() == 2){
                 finalChoice = "goat";
             }else{

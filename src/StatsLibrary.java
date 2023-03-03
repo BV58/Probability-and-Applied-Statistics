@@ -3,7 +3,7 @@ import java.util.Collections;
 
 public class StatsLibrary {
 
-    //method for mean
+
     /**
      *
      * @param input - Takes a Double ArrayList as a parameter
@@ -17,7 +17,7 @@ public class StatsLibrary {
         return total/input.size();
     }
 
-    //method for median
+
     /**
      * @param input - Takes a Double ArrayList as a parameter
      * Takes the input parameter and returns the median of the input array.
@@ -32,7 +32,7 @@ public class StatsLibrary {
         }
     }
 
-    //method for mode
+
     public String mode(ArrayList<Double> input) {
         double mode = 0;
         double modeNumber = -1;
@@ -90,6 +90,8 @@ public class StatsLibrary {
     public double binomialDistribution(double p, double n, double y){
         return combination(n,y)*Math.pow(p,y)*Math.pow(1-p, n-y);
     }
-
+    public double geometricDistribution(double p, double y){
+        return Math.pow((1-p),y-1)*p;
+    }
 }
 
