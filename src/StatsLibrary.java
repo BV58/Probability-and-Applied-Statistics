@@ -5,8 +5,8 @@ public class StatsLibrary {
 
 
     /**
-     *
-     * @param input - Takes a Double ArrayList as a parameter
+     *  returns the mean of the ArrayList object inputted into the parameter.
+     * @param input
      * @return
      */
     public double mean(ArrayList<Double> input) {
@@ -32,7 +32,11 @@ public class StatsLibrary {
         }
     }
 
-
+    /**
+     * Finds the most frequent element of the input ArrayList. Returns a error string if no mode is found.
+     * @param input
+     * @return
+     */
     public String mode(ArrayList<Double> input) {
         double mode = 0;
         double modeNumber = -1;
@@ -40,7 +44,6 @@ public class StatsLibrary {
             double temp = Collections.frequency(input, num);
             if (temp > mode) {
                 mode = temp;
-                num = modeNumber;
             }else if (num != modeNumber && temp == mode) {
                 modeNumber = 0;
             }
@@ -51,7 +54,11 @@ public class StatsLibrary {
 
     }
 
-
+    /**
+     * Calculates the standardDeviation found from the input array
+     * @param input
+     * @return
+     */
     public double standardDeviation(ArrayList<Double> input) {
         double sum = 0;
         double m = mean(input);
@@ -62,6 +69,13 @@ public class StatsLibrary {
         return Math.sqrt(sum/input.size());
     }
 
+    /**
+     * Calculates the combination of n and r.
+     * Uses the factorial method.
+     * @param n
+     * @param r
+     * @return
+     */
     public double combination(double n, double r){
         double nMinusR = 1;
         for (int i = 1; i <= n-r; i++){
@@ -69,7 +83,13 @@ public class StatsLibrary {
         }
         return factorial(n)/(factorial(r) * nMinusR);
     }
-
+    /**
+     * Calculates the permutation of n and r.
+     * Uses the factorial method.
+     * @param n
+     * @param r
+     * @return
+     */
     public double permutation(double n, double r){
         double nMinusR = 1;
         for (int i = 1; i <= n-r; i++){
@@ -78,7 +98,11 @@ public class StatsLibrary {
 
         return factorial(n)/nMinusR;
     }
-
+    /**
+     * Calculates the factorial of n.
+     * @param n
+     * @return
+     */
     public double factorial(double n){
         double nFactorial = 1;
         for (double i = 1; i <= n; i++){
@@ -87,9 +111,24 @@ public class StatsLibrary {
         return nFactorial;
     }
 
+    /**
+     * Returns the Binomial Distribution of p, n, and y.
+     * Uses the combination method
+     * @param p
+     * @param n
+     * @param y
+     * @return
+     */
     public double binomialDistribution(double p, double n, double y){
         return combination(n,y)*Math.pow(p,y)*Math.pow(1-p, n-y);
     }
+    /**
+     * Returns the Geometric Distribution of p and y.
+     * Uses the combination method
+     * @param p
+     * @param y
+     * @return
+     */
     public double geometricDistribution(double p, double y){
         return Math.pow((1-p),y-1)*p;
     }
